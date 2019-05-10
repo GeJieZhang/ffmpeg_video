@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RangeSeekBar">
+        <attr name="progressThumb" format="reference"/>
+        <attr name="leftThumbDrawable" format="reference" />
+        <attr name="rightThumbDrawable" format="reference" />
+        <attr name="maskColor" format="color"/>
+        <attr name="paddingColor" format="color"/>
+    </declare-styleable>
+</resources>
