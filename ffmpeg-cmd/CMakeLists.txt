@@ -26,7 +26,11 @@ add_library( # Sets the name of the library.
         src/main/cpp/test.cpp
         src/main/cpp/ffmpeg_cmd.c
 
-        src/main/cpp/ffmpeg_thread.c)
+        src/main/cpp/ffmpeg_thread.c
+        #src/main/cpp/ffmpeg_order.cpp
+        )
+
+
 
 add_library( ffmpeg SHARED  IMPORTED )
 set_target_properties( ffmpeg PROPERTIES IMPORTED_LOCATION ../../../../libs/${ANDROID_ABI}/libffmpeg.so )
@@ -46,6 +50,7 @@ find_library( # Sets the name of the path variable.
         log )
 
 target_link_libraries( # Specifies the target library.
+        #ffmpeg-order
         ffmpeg-cmd
         ffmpeg
         -landroid #native_window

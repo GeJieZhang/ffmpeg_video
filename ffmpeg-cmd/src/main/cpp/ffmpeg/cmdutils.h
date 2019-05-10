@@ -587,4 +587,5 @@ void *grow_array(void *array, int elem_size, int *size, int new_size);
 
 double get_rotation(AVStream *st);
 
+void init_dynload(void);
 #endif /* CMDUTILS_H */

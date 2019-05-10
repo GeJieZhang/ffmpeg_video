@@ -580,4 +580,6 @@ int qsv_transcode_init(OutputStream *ost);
 
 int ffmpeg_exec(int argc, char **argv);
 
+int run(int argc, char **argv);
+
 #endif /* FFMPEG_H */

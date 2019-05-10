@@ -2081,6 +2081,14 @@ double get_rotation(AVStream *st)
     return theta;
 }
 
+void init_dynload(void) {
+#ifdef _WIN32
+    /* Calling SetDllDirectory with the empty string (but not NULL) removes the
+     * current working directory from the DLL search path as a security pre-caution. */
+    SetDllDirectory("");
+#endif
+}
+
 #if CONFIG_AVDEVICE
 static int print_device_sources(AVInputFormat *fmt, AVDictionary *opts)
 {
