@@ -35,7 +35,7 @@
  * the address of the first character in str after the prefix.
  *
  * @param str input string
- * @param pfx prefix to test
+ * @param pfx prefix to change_code
  * @param ptr updated if the prefix is matched inside str
  * @return non-zero if the prefix matches, zero otherwise
  */
@@ -47,7 +47,7 @@ int av_strstart(const char *str, const char *pfx, const char **ptr);
  * after the prefix.
  *
  * @param str input string
- * @param pfx prefix to test
+ * @param pfx prefix to change_code
  * @param ptr updated if the prefix is matched inside str
  * @return non-zero if the prefix matches, zero otherwise
  */

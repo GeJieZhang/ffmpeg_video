@@ -7,13 +7,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="videoEdit"
-        android:text="视频剪辑" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="videoChangeCode"
-        android:text="视频转码" />
+        android:onClick="changeCode"
+        android:text="Mp4转Avi" />
 
 </LinearLayout>

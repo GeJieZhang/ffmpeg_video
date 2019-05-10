@@ -2284,7 +2284,7 @@ loop_end:
     }
 
     if (!(oc->oformat->flags & AVFMT_NOFILE)) {
-        /* test if it already exists to avoid losing precious files */
+        /* change_code if it already exists to avoid losing precious files */
         assert_file_overwrite(filename);
 
         /* open the file */

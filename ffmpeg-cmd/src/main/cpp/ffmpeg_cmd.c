@@ -5,16 +5,20 @@
 #include "ffmpeg_thread.h"
 #include "android_log.h"
 #include "cmdutils.h"
+#include "change_code.h"
+
 
 static JavaVM *jvm = NULL;
 //java虚拟机
 static jclass m_clazz = NULL;//当前类(面向java)
 
+
+
 /**
  * 回调执行Java方法
  * 参看 Jni反射+Java反射
  */
-void callJavaMethod(JNIEnv *env, jclass clazz,int ret) {
+void callJavaMethod(JNIEnv *env, jclass clazz, int ret) {
     if (clazz == NULL) {
         LOGE("---------------clazz isNULL---------------");
         return;
@@ -26,9 +30,10 @@ void callJavaMethod(JNIEnv *env, jclass clazz,int ret) {
         return;
     }
     //调用该java方法
-    (*env)->CallStaticVoidMethod(env, clazz, methodID,ret);
+    (*env)->CallStaticVoidMethod(env, clazz, methodID, ret);
 }
-void callJavaMethodProgress(JNIEnv *env, jclass clazz,float ret) {
+
+void callJavaMethodProgress(JNIEnv *env, jclass clazz, float ret) {
     if (clazz == NULL) {
         LOGE("---------------clazz isNULL---------------");
         return;
@@ -40,7 +45,7 @@ void callJavaMethodProgress(JNIEnv *env, jclass clazz,float ret) {
         return;
     }
     //调用该java方法
-    (*env)->CallStaticVoidMethod(env, clazz, methodID,ret);
+    (*env)->CallStaticVoidMethod(env, clazz, methodID, ret);
 }
 
 /**
@@ -50,7 +55,7 @@ static void ffmpeg_callback(int ret) {
     JNIEnv *env;
     //附加到当前线程从JVM中取出JNIEnv, C/C++从子线程中直接回到Java里的方法时  必须经过这个步骤
     (*jvm)->AttachCurrentThread(jvm, (void **) &env, NULL);
-    callJavaMethod(env, m_clazz,ret);
+    callJavaMethod(env, m_clazz, ret);
 
     //完毕-脱离当前线程
     (*jvm)->DetachCurrentThread(jvm);
@@ -59,13 +64,13 @@ static void ffmpeg_callback(int ret) {
 void ffmpeg_progress(float progress) {
     JNIEnv *env;
     (*jvm)->AttachCurrentThread(jvm, (void **) &env, NULL);
-    callJavaMethodProgress(env, m_clazz,progress);
+    callJavaMethodProgress(env, m_clazz, progress);
     (*jvm)->DetachCurrentThread(jvm);
 }
 
 JNIEXPORT jint JNICALL
-Java_com_m4399_ffmpeg_1cmd_FFmpegCmd_exec(JNIEnv *env, jclass clazz, jint cmdnum, jobjectArray cmdline)
-{
+Java_com_m4399_ffmpeg_1cmd_FFmpegCmd_exec(JNIEnv *env, jclass clazz, jint cmdnum,
+                                          jobjectArray cmdline) {
     (*env)->GetJavaVM(env, &jvm);
     m_clazz = (*env)->NewGlobalRef(env, clazz);
     //---------------------------------C语言 反射Java 相关----------------------------------------
@@ -79,7 +84,7 @@ Java_com_m4399_ffmpeg_1cmd_FFmpegCmd_exec(JNIEnv *env, jclass clazz, jint cmdnum
         strr = (jstring *) malloc(sizeof(jstring) * cmdnum);
 
         for (i = 0; i < cmdnum; ++i) {//转换
-            strr[i] = (jstring)(*env)->GetObjectArrayElement(env, cmdline, i);
+            strr[i] = (jstring) (*env)->GetObjectArrayElement(env, cmdline, i);
             argv[i] = (char *) (*env)->GetStringUTFChars(env, strr[i], 0);
         }
 
@@ -96,8 +101,25 @@ Java_com_m4399_ffmpeg_1cmd_FFmpegCmd_exec(JNIEnv *env, jclass clazz, jint cmdnum
 }
 
 JNIEXPORT void JNICALL
-Java_com_m4399_ffmpeg_1cmd_FFmpegCmd_exit(JNIEnv *env, jclass type)
-{
+Java_com_m4399_ffmpeg_1cmd_FFmpegCmd_exit(JNIEnv *env, jclass type) {
 
 
 }
+
+extern int Add(const char *str, const char *str2,JNIEnv *env);
+
+
+JNIEXPORT void JNICALL
+Java_com_m4399_ffmpeg_1cmd_FFmpegCmd_changeCode(JNIEnv *env, jclass type, jstring str1_,
+                                                jstring str2_) {
+    const char *str1 = (*env)->GetStringUTFChars(env, str1_, 0);
+    const char *str2 = (*env)->GetStringUTFChars(env, str2_, 0);
+
+
+    Add(str1, str2,env);
+
+
+    (*env)->ReleaseStringUTFChars(env, str1_, str1);
+    (*env)->ReleaseStringUTFChars(env, str2_, str2);
+}
+

@@ -21,4 +21,10 @@ public class MainActivity extends AppCompatActivity
     {
         VideoListActivity.open(this);
     }
+    public void videoChangeCode(View view)
+    {
+        VideoChangeCode.open(this);
+    }
+
+
 }

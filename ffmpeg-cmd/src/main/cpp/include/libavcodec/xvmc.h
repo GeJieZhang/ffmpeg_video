@@ -45,7 +45,7 @@
 
 struct attribute_deprecated xvmc_pix_fmt {
     /** The field contains the special constant value AV_XVMC_ID.
-        It is used as a test that the application correctly uses the API,
+        It is used as a change_code that the application correctly uses the API,
         and that there is no corruption caused by pixel routines.
         - application - set during initialization
         - libavcodec  - unchanged

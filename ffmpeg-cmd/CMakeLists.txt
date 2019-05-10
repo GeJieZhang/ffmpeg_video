@@ -22,13 +22,14 @@ add_library( # Sets the name of the library.
         src/main/cpp/ffmpeg/ffmpeg.c
         src/main/cpp/ffmpeg/ffmpeg_filter.c
         src/main/cpp/ffmpeg/ffmpeg_opt.c
-
+        src/main/cpp/change_code.cpp
+        src/main/cpp/test.cpp
         src/main/cpp/ffmpeg_cmd.c
 
         src/main/cpp/ffmpeg_thread.c)
 
 add_library( ffmpeg SHARED  IMPORTED )
-set_target_properties( ffmpeg PROPERTIES IMPORTED_LOCATION ../../../../libs/armeabi-v7a/libffmpeg.so )
+set_target_properties( ffmpeg PROPERTIES IMPORTED_LOCATION ../../../../libs/${ANDROID_ABI}/libffmpeg.so )
 
 #add_library(mxnet STATIC IMPORTED)
 
